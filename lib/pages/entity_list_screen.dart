@@ -96,7 +96,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                     },
                   ),
                 ),
-                title: Text(entity.title),
+                title: Text("[ID: ${entity.id}] ${entity.title}"),
                 subtitle: Text('Lat: ${entity.lat}\nLon: ${entity.lon}'),
               );
             },
