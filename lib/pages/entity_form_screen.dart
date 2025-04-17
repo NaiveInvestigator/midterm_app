@@ -162,7 +162,7 @@ class _EntityFormScreenState extends State<EntityFormScreen> {
           child: Column(
             children: [
               // Mode Selector
-              SizedBox(height: 16),
+              // SizedBox(height: 10),
               Row(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -186,7 +186,7 @@ class _EntityFormScreenState extends State<EntityFormScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 10),
               if (_selectedMode == FormMode.edit)
                 TextField(
                   controller: _idController,
@@ -235,6 +235,7 @@ class _EntityFormScreenState extends State<EntityFormScreen> {
                   ),
                 ],
               ),
+              SizedBox(height: 10),
               _imageFile != null
                   ? Image.file(_imageFile!, height: 150)
                   : Text('No image selected'),
