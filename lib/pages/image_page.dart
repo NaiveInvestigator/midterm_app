@@ -10,9 +10,7 @@ class ImagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Full Image'),
-      ),
+      appBar: AppBar(title: Text('Full Image')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -22,22 +20,29 @@ class ImagePage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 title,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
             // Full-size image
             GestureDetector(
               onTap: () {
-                Navigator.pop(context); // Close the page when the image is tapped
+                Navigator.pop(
+                  context,
+                ); // Close the page when the image is tapped
               },
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.contain,
                 width: double.infinity,
                 height: 400, // Adjust height as needed
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/placeholder.jpg',
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: 400,
+                  );
+                },
               ),
             ),
           ],

@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Midterm App')),
       drawer: Drawer(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[

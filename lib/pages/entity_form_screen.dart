@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
 enum FormMode { add, edit }
@@ -54,6 +55,7 @@ class _EntityFormScreenState extends State<EntityFormScreen> {
       'lat': _latController.text,
       'lon': _lonController.text,
     });
+
     request.fields['image'] = baseImage;
 
     // request.fields['image'] = 'konbanwa';
@@ -64,6 +66,7 @@ class _EntityFormScreenState extends State<EntityFormScreen> {
     //     _imageFile!.readAsBytes().asStream(),
     //     _imageFile!.lengthSync(),
     //     filename: _imageFile!.path.split('/').last,
+    //     contentType: MediaType('image', 'jpeg'),
     //   ),
     // );
 

@@ -94,6 +94,14 @@ class _MapScreenState extends State<MapScreen> {
                     fit: BoxFit.cover,
                     height: 200,
                     width: double.infinity,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        'assets/placeholder.jpg', // Make sure this file exists in your assets
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: double.infinity,
+                      );
+                    },
                   ),
                 ),
                 SizedBox(height: 16),

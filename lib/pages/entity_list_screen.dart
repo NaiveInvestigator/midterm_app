@@ -49,6 +49,79 @@ class _EntityListScreenState extends State<EntityListScreen> {
     }
   }
 
+  void _showEditDialog(BuildContext context, Entity entity) {
+    final titleController = TextEditingController(text: entity.title);
+    final latController = TextEditingController(text: entity.lat);
+    final lonController = TextEditingController(text: entity.lon);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Edit Entity'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: titleController,
+                  decoration: InputDecoration(labelText: 'Title'),
+                ),
+                TextField(
+                  controller: latController,
+                  decoration: InputDecoration(labelText: 'Latitude'),
+                ),
+                TextField(
+                  controller: lonController,
+                  decoration: InputDecoration(labelText: 'Longitude'),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            ElevatedButton(
+              child: Text('Save'),
+              onPressed: () async {
+                Navigator.of(context).pop();
+
+                var headers = {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                };
+                var request = http.Request(
+                  'PUT',
+                  Uri.parse('https://labs.anontech.info/cse489/t3/api.php'),
+                );
+                request.bodyFields = {
+                  'id': entity.id.toString(),
+                  'title': titleController.text,
+                  'lat': latController.text,
+                  'lon': lonController.text,
+                  'image': entity.image,
+                };
+                request.headers.addAll(headers);
+
+                http.StreamedResponse response = await request.send();
+
+                if (response.statusCode == 200) {
+                  print(await response.stream.bytesToString());
+                  setState(() {
+                    _entities = fetchEntities();
+                  });
+                } else {
+                  print(response.reasonPhrase);
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -98,6 +171,12 @@ class _EntityListScreenState extends State<EntityListScreen> {
                 ),
                 title: Text("[ID: ${entity.id}] ${entity.title}"),
                 subtitle: Text('Lat: ${entity.lat}\nLon: ${entity.lon}'),
+                trailing: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    _showEditDialog(context, entity);
+                  },
+                ),
               );
             },
           );
